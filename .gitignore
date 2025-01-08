@@ -1,0 +1,9 @@
+**/*.key
+.DS_Store
+resources/.vault-init.json
+resources/github-secrets.sh
+resources/*-password.txt
+
+.terraform
+*.tfstate*
+.terraform.lock.hcl
