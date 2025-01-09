@@ -1,1 +1,0 @@
-vault kv put ${tls_skip} -mount=secrets db-creds username=demo password=${PET_PGDB_PASSWORD}
