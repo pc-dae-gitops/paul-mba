@@ -72,6 +72,12 @@ spec:
   sourceRef:
     kind: GitRepository
     name: global-config
+  postBuild:
+    substitute:
+      dnsSuffix: kubernetes.docker.internal
+    substituteFrom:
+      - kind: ConfigMap
+        name: cluster-config
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
