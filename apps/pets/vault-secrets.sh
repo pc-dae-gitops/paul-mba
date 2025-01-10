@@ -41,9 +41,6 @@ function args() {
 
 args "$@"
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-source $SCRIPT_DIR/envs.sh
-
 source ${secrets_file}
 
 vault kv put -mount=secrets demo-db type=$TYPE provider=$PROVIDER host=$HOST port=$PORT database=$DATABASE username=$USERNAME password=$PASSWORD

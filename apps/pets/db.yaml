@@ -25,8 +25,9 @@ spec:
     kind: ClusterSecretStore
     name: vault
   target:
+    template:
+          type: servicebinding.io/postgresql
     name: demo-db
-    type: servicebinding.io/postgresql
     creationPolicy: Owner
   dataFrom:
     - extract:
