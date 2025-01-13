@@ -51,14 +51,27 @@ spec:
           ports:
             - name: http
               containerPort: 8080
-          livenessProbe:
-            httpGet:
-              path: /livez
-              port: http
           readinessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
             httpGet:
-              path: /readyz
-              port: http
+              scheme: HTTP
+              path: /actuator/health/readiness
+              port: 8080
+
+          livenessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              scheme: HTTP
+              path: /actuator/health/liveness
+              port: 8080
           volumeMounts:
             - mountPath: /bindings/secret
               name: binding
