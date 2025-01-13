@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: infra
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: infra
+  namespace: infra
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: infra
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: infra
+  namespace: infra
+  labels:
+    app: infra
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: infra
+  template:
+    metadata:
+      labels:
+        app: infra
+    spec:
+      containers:
+        - name: workload
+          image: paulcarltondae/infra-mgr:0.0.2 # {"$imagepolicy": "flux-system:infra-mgr:tag"}
+          env:
+            - name: SERVICE_BINDING_ROOT
+              value: /bindings
+            - name: SPRING_APPLICATION_JSON
+              value: |
+                {
+                  "management.endpoint.health.probes.add-additional-paths": true
+                }
+          ports:
+            - name: http
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+          volumeMounts:
+            - mountPath: /bindings/secret
+              name: binding
+              readOnly: true
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 64Mi
+      volumes:
+        - name: binding
+          projected:
+            sources:
+              - secret:
+                  name: infra-db

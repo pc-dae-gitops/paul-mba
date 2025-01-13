@@ -1,0 +1,85 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: infra-db
+  namespace: infra
+spec:
+  refreshInterval: 5m
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: vault
+  target:
+    template:
+          type: servicebinding.io/postgresql
+    name: infra-db
+    creationPolicy: Owner
+  dataFrom:
+    - extract:
+        key: infra-db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: infra-db
+  namespace: infra
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: infra-db
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: infra-db
+  namespace: infra
+  labels:
+    app: infra-db
+spec:
+  selector:
+    matchLabels:
+      app: infra-db
+  template:
+    metadata:
+      labels:
+        app: infra-db
+    spec:
+      containers:
+        - image: postgres:17
+          name: postgresql
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: infra-db
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: infra-db
+                  key: password
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: infra-db
+                  key: database
+          ports:
+            - containerPort: 5432
+              name: postgresql
+          livenessProbe:
+            tcpSocket:
+              port: postgresql
+          readinessProbe:
+            tcpSocket:
+              port: postgresql
+          startupProbe:
+            tcpSocket:
+              port: postgresql
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 64Mi
