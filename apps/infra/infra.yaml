@@ -33,6 +33,8 @@ spec:
       labels:
         app: infra
     spec:
+      strategy:
+          type: Recreate
       containers:
         - name: workload
           image: paulcarltondae/infra-mgr:0.0.6 # {"$imagepolicy": "flux-system:infra-mgr"}
