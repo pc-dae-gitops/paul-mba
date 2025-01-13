@@ -37,6 +37,8 @@ spec:
         - name: workload
           image: paulcarltondae/infra-mgr:0.0.3 # {"$imagepolicy": "flux-system:infra-mgr"}
           env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: postgres
             - name: SERVICE_BINDING_ROOT
               value: /bindings
             - name: SPRING_APPLICATION_JSON
