@@ -15,7 +15,6 @@ spec:
       targetPort: 8080
   selector:
     app: infra
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -36,7 +35,7 @@ spec:
     spec:
       containers:
         - name: workload
-          image: paulcarltondae/infra-mgr:0.0.2 # {"$imagepolicy": "flux-system:infra-mgr:tag"}
+          image: 0.0.2 # {"$imagepolicy": "flux-system:infra-mgr:tag"}
           env:
             - name: SERVICE_BINDING_ROOT
               value: /bindings
