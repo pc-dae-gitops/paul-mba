@@ -37,7 +37,7 @@ spec:
     spec:
       containers:
         - name: workload
-          image: paulcarltondae/infra-mgr:0.0.16 # {"$imagepolicy": "flux-system:infra-mgr"}
+          image: paulcarltondae/infra-mgr:0.0.17 # {"$imagepolicy": "flux-system:infra-mgr"}
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: postgres
