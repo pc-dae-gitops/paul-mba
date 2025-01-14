@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: infra-couchdb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: infra
+  namespace: infra-couchdb
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: infra
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: infra
+  namespace: infra-couchdb
+  labels:
+    app: infra
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: infra
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: infra
+    spec:
+      containers:
+        - name: workload
+          image: paulcarltondae/infra-mgr-couchdb:0.0.1 # {"$imagepolicy": "flux-system:infra-mgr-couchdb"}
+          env:
+            - name: SERVICE_BINDING_ROOT
+              value: /bindings
+            - name: SPRING_APPLICATION_JSON
+              value: |
+                {
+                  "management.endpoint.health.probes.add-additional-paths": true
+                }
+          ports:
+            - name: http
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          volumeMounts:
+            - mountPath: /bindings/secret
+              name: binding
+              readOnly: true
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 64Mi
+      volumes:
+        - name: binding
+          projected:
+            sources:
+              - secret:
+                  name: infra-couchdb

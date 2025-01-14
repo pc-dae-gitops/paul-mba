@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: local-ca-issuer
+  name: infra
+  namespace: infra-couchdb
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: infra-couchdb.kubernetes.docker.internal
+    http:
+      paths:
+      - backend:
+          service:
+            name: infra
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - infra.kubernetes.docker.internal
+    secretName: infra-tls

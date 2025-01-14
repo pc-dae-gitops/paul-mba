@@ -23,7 +23,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: pets
+  name: infra-couchdb
   namespace: flux-system
 spec:
   interval: 10m0s
@@ -31,7 +31,7 @@ spec:
   timeout: 30s
   dependsOn:
     - name: flux
-  path: ./apps/pets
+  path: ./apps/infra-couchdb
   prune: true
   wait: true
   sourceRef:
