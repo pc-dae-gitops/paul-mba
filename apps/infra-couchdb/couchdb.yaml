@@ -52,6 +52,7 @@ spec:
   timeout: 5m
   values:
     allowAdminParty: true
+    createAdminSecret: false
     couchdbConfig:
       couchdb:
         uuid: b18cdcd752c0416b8bd255760a94c8bc
