@@ -51,6 +51,7 @@ spec:
   interval: 10m0s
   timeout: 5m
   values:
+    clusterSize: 1
     createAdminSecret: true
     couchdbConfig:
       couchdb:
