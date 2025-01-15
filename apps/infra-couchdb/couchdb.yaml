@@ -51,7 +51,6 @@ spec:
   interval: 10m0s
   timeout: 5m
   values:
-    allowAdminParty: true
     createAdminSecret: true
     couchdbConfig:
       couchdb:
