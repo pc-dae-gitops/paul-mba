@@ -64,3 +64,5 @@ spec:
         pullPolicy: Always
       defaultDatabases:
         - _global_changes
+        - _users
+        - _replicator
