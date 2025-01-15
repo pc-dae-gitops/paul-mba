@@ -1,7 +1,7 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: infra-couchdb
+  name: couchdb
   namespace: infra-couchdb
 spec:
   refreshInterval: 5m
@@ -11,7 +11,7 @@ spec:
   target:
     template:
           type: servicebinding.io/couchdb
-    name: infra-couchdb
+    name: couchdb
     creationPolicy: Owner
   dataFrom:
     - extract:
@@ -52,7 +52,7 @@ spec:
   timeout: 5m
   values:
     allowAdminParty: true
-    createAdminSecret: false
+    createAdminSecret: true
     couchdbConfig:
       couchdb:
         uuid: b18cdcd752c0416b8bd255760a94c8bc
