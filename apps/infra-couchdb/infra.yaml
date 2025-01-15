@@ -77,4 +77,4 @@ spec:
           projected:
             sources:
               - secret:
-                  name: infra-couchdb
+                  name: couchdb
