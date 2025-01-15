@@ -57,7 +57,7 @@ spec:
       couchdb:
         uuid: b18cdcd752c0416b8bd255760a94c8bc
     autoSetup:
-      enabled: false
+      enabled: true
       image:
         repository: curlimages/curl
         tag: latest
