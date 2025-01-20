@@ -43,4 +43,4 @@ args "$@"
 
 source ${secrets_file}
 
-vault kv put -mount=secrets infra-couchdb type=$TYPE provider=$PROVIDER host=$HOST port=$PORT url=$PROVIDER://$HOST:$PORT/$DATABASE database=$DATABASE username=$USERNAME password=$PASSWORD
+vault kv put -mount=secrets infra-couchdb provider=$PROVIDER host=$HOST port=$PORT database=$DATABASE username=$USERNAME password=$PASSWORD

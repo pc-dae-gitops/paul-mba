@@ -1,0 +1,42 @@
+{
+    "docs": [
+        {
+            "name": "paul1", 
+            "type": "vm",
+            "memory": "20gb",
+            "cpu": "4",
+            "disk": "100gb",
+            "os": "ubuntu"
+        },
+        {
+            "name": "paul2", 
+            "type": "vm",
+            "memory": "200gb",
+            "cpu": "4",
+            "disk": "100gb",
+            "os": "centos"
+        },
+        {
+            "name": "paul1", 
+            "type": "dns",
+            "fqdn": "paul1.example.com",
+            "assignment": {
+                "type": "vm",
+                "name": "paul1"
+            }      
+        },
+        {
+            "name": "paul2", 
+            "type": "dns",
+            "fqdn": "paul2a.example.com",
+            "assignment": {
+                "type": "vm",
+                "name": "paul2"
+            }      
+        },
+        {
+            "name": "paul1",
+            "email": "paul.carlton@dae.mn"   
+        }
+    ]
+}

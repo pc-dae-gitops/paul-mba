@@ -1,0 +1,18 @@
+{
+    "_id": "_design/infra_views",
+    "_rev": "9-e9c2f013640d991222d86da5467d43ec",
+    "views": {
+        "by_type": {
+            "map": "function (doc) { if (doc.type ) { emit(doc.type, doc.name); } }"
+        },
+        "all": {
+            "map": "function (doc) { { emit(doc.name, doc); } }"
+        },
+        "by_name": {
+            "map": "function(doc) {\n  emit(doc.name, doc);\n}"
+        },
+        "by_email": {
+            "map": "function (doc) { if (doc.email ) { emit(doc.email, doc.name); } }"
+        }
+    }
+  }
