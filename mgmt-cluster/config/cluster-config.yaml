@@ -8,7 +8,7 @@ data:
   clusterType: "macbook"
   mgmtClusterName: paul-mba
   dnsSuffix: kubernetes.docker.internal
-  clusterIP: 10.104.25.25
+  clusterIP: 10.111.176.22
   scmType: github
   GitHubOrg: pc-dae-gitops
   GitHubRepo: paul-mba
@@ -17,7 +17,7 @@ data:
   globalGitHubBranch: main
   awsAccountId: "none"
   prefixName: paul
-  awsRegion: us-west-2
+  awsRegion: eu-west-1
   userEmail: paul.carlton@dae.mn
   vault_url: https://vault.kubernetes.docker.internal
   commitUser: paul-carlton
