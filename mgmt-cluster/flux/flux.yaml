@@ -1,4 +1,4 @@
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: kyverno
@@ -16,7 +16,7 @@ spec:
     kind: GitRepository
     name: global-config
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: cert-manager
@@ -34,7 +34,7 @@ spec:
     kind: GitRepository
     name: global-config
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: nginx
@@ -55,7 +55,7 @@ spec:
     substitute:
       dnsSuffix: kubernetes.docker.internal
 # ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
 # kind: Kustomization
 # metadata:
 #   name: metrics-server
@@ -73,7 +73,7 @@ spec:
 #     kind: GitRepository
 #     name: global-config
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: reloader
@@ -91,7 +91,7 @@ spec:
     kind: GitRepository
     name: global-config
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: cert-config
@@ -113,7 +113,7 @@ spec:
     substitute:
       dnsSuffix: kubernetes.docker.internal
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: vault
@@ -133,13 +133,12 @@ spec:
     name: global-config
   postBuild:
     substitute:
-      dnsSuffix: kubernetes.docker.internal
       storageClass: hostpath
     substituteFrom:
       - kind: ConfigMap
         name: cluster-config
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: external-secrets
@@ -157,7 +156,7 @@ spec:
     kind: GitRepository
     name: global-config
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: secrets
@@ -172,14 +171,16 @@ spec:
   dependsOn:
     - name: external-secrets
     - name: cert-config
+    - name: vault
   sourceRef:
     kind: GitRepository
     name: global-config
   postBuild:
-    substitute:
-      dnsSuffix: kubernetes.docker.internal
+    substituteFrom:
+      - kind: ConfigMap
+        name: cluster-config
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: dex
@@ -203,7 +204,7 @@ spec:
       - kind: ConfigMap
         name: cluster-config
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: config
@@ -219,7 +220,7 @@ spec:
     kind: GitRepository
     name: flux-system
 ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
 # kind: Kustomization
 # metadata:
 #   name: monitoring
@@ -274,7 +275,7 @@ spec:
 #       - kind: ConfigMap
 #         name: cluster-config
 # ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
 # kind: Kustomization
 # metadata:
 #   name: prometheus
@@ -296,7 +297,7 @@ spec:
 #       - kind: ConfigMap
 #         name: cluster-config
 # ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
 # kind: Kustomization
 # metadata:
 #   name: prom-alert
@@ -318,7 +319,7 @@ spec:
 #       - kind: ConfigMap
 #         name: cluster-config
 # ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
 # kind: Kustomization
 # metadata:
 #   name: grafana
@@ -340,7 +341,7 @@ spec:
 #       - kind: ConfigMap
 #         name: cluster-config
 # ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
 # kind: Kustomization
 # metadata:
 #   name: loki
@@ -362,7 +363,7 @@ spec:
 #       - kind: ConfigMap
 #         name: cluster-config
 # ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
 # kind: Kustomization
 # metadata:
 #   name: graf-agent
@@ -402,7 +403,7 @@ spec:
 #     name: flux-monitoring
 #   wait: true
 # ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: flux
