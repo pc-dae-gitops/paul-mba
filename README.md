@@ -41,3 +41,8 @@ Once Flux has deployed the cluster
 ## Destroy
 
 To destroy the cluster run the `reset.sh` script. This will destroy the K8s cluster.
+
+## Notes
+```
+sudo security add-trusted-cert -d -r trustRoot -p ssl -p basic -k /Library/Keychains/System.keychain CA.crt
+```
