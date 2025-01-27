@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: local-ca-issuer
+  name: notifications-html
+  namespace: notifications-html
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: notifications-html.kubernetes.docker.internal
+    http:
+      paths:
+      - backend:
+          service:
+            name: notifications-html
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - notifications-html.kubernetes.docker.internal
+    secretName: notifications-html-tls

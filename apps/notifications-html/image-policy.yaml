@@ -1,0 +1,12 @@
+---
+kind: ImagePolicy
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+metadata:
+  name: notifications-html
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: notifications-html
+  policy:
+    semver:
+      range: x.x.x-0
