@@ -37,7 +37,7 @@ spec:
     spec:
       containers:
         - name: workload
-          image: paulcarltondae/notifications-html:0.0.1 # {"$imagepolicy": "flux-system:notifications-html"}
+          image: paulcarltondae/notifications-html:0.0.2 # {"$imagepolicy": "flux-system:notifications-html"}
           env:
             - name: SPRING_APPLICATION_JSON
               value: |
@@ -66,4 +66,3 @@ spec:
             requests:
               cpu: 100m
               memory: 64Mi
-
