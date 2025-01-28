@@ -37,7 +37,7 @@ spec:
     spec:
       containers:
         - name: workload
-          image: paulcarltondae/emails:0.0.4 # {"$imagepolicy": "flux-system:emails"}
+          image: paulcarltondae/emails:0.1.0 # {"$imagepolicy": "flux-system:emails"}
           env:
             - name: SPRING_APPLICATION_JSON
               value: |
